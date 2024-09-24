@@ -1,8 +1,9 @@
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, Field, EmailStr
 from datetime import datetime
 
 
+# user model --------------------------------------------------------
 class UserBase(BaseModel):
     email: EmailStr = Field(unique=True, max_length=255)
     username: str = Field(unique=True, max_length=30, min_length=1)
@@ -21,3 +22,29 @@ class Message(BaseModel):
 
 class Username(BaseModel):
     username: str = Field(unique=True, max_length=30, min_length=1)
+
+
+# token model --------------------------------------------------------
+class TokenBase(BaseModel):
+    access_token: str
+    token_type: str = Field(default="bearer")
+
+
+class TokenData(BaseModel):
+    id: Optional[int] = None
+
+
+# email model --------------------------------------------------------
+class EmailSchema(BaseModel):
+    email: EmailStr
+
+
+# auth mail --------------------------------------------------------
+class AuthMailResponse(BaseModel):
+    auth_id: int
+    auth_code: str
+
+
+class AuthMailConfirm(BaseModel):
+    auth_id: int
+    auth_code: str

@@ -1,5 +1,5 @@
 from .database import Base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Date
 from sqlalchemy.orm import relationship
 import datetime
 import enum
@@ -182,7 +182,10 @@ class AuthEmail(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(255), nullable=False)
     auth_code = Column(String(6))
-    auth_count = Column(String(20))
-    status = Column(Enum(AuthEmailStatus))
-    auth_date = Column(DateTime)
+    auth_count = Column(Integer, default=1)
+    status = Column(Enum(AuthEmailStatus), default="ready")
+    auth_date = Column(Date)
     expire_date = Column(DateTime)
+
+
+# prater.insta@gmail.com

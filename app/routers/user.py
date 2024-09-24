@@ -1,23 +1,14 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Body
 
-from app.utils import hash_pw
-
-from ..schemas import CreateUser, Message
-
-from ..models import User
-from ..database import db_dependency
+from app.utils.authUtils import hash_pw
+from app.schemas import CreateUser, Message
+from app.models import User
+from app.database import db_dependency
 
 router = APIRouter()
 
 
-# api list
-# 로그인
 # 회원가입
-# 유저네임 체크
-# (이메일 인증)
-# 로그아웃
-
-
 @router.post("/register")
 async def register(db: db_dependency, user_info: CreateUser):
     user = (

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from . import models
 from .database import engine
 from .routers import auth, user
@@ -7,7 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
-
 origins = [
     "http://localhost",
     "http://localhost:8080",
