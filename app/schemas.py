@@ -5,8 +5,8 @@ from datetime import datetime
 
 # user model --------------------------------------------------------
 class UserBase(BaseModel):
-    email: EmailStr = Field(unique=True, max_length=255)
-    username: str = Field(unique=True, max_length=30, min_length=1)
+    email: EmailStr = Field(max_length=255)
+    username: str = Field(max_length=30, min_length=1)
     password: str = Field(max_length=255)
     description: str | None = Field(default=None, max_length=255)
     # reg_date: datetime = Field(default_factory=datetime.now())
@@ -20,8 +20,17 @@ class Message(BaseModel):
     message: str
 
 
-class Username(BaseModel):
+class UsernameBase(BaseModel):
     username: str = Field(unique=True, max_length=30, min_length=1)
+
+
+class EmailBase(BaseModel):
+    email: EmailStr = Field(max_length=255)
+
+
+class ResetPasswordBase(BaseModel):
+    email: EmailStr = Field(max_length=255)
+    password: str = Field(max_length=255)
 
 
 # token model --------------------------------------------------------
@@ -48,3 +57,20 @@ class AuthMailResponse(BaseModel):
 class AuthMailConfirm(BaseModel):
     auth_id: int
     auth_code: str
+
+
+# response model -------------------------------------------------
+class ResponseBase(BaseModel):
+    result: str
+    code: int
+    message: str
+
+
+class FailResponse(ResponseBase):
+    result: str = Field(default="N")
+
+
+class SuccessResponse(ResponseBase):
+    result: str = "Y"
+    code: int = 0
+    message: str = ""

@@ -52,12 +52,11 @@ def get_auth_number(_len=6):
 
 
 async def send_mail(email: EmailSchema, auth_code: int):
-
     config = set_mail_config()
 
     message = MessageSchema(
         subject="mail verification",
-        recipients=[email.dict().get("email")],
+        recipients=[email],
         template_body={"auth_code": auth_code},
         subtype=MessageType.html,
     )
