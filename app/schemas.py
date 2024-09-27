@@ -9,15 +9,10 @@ class UserBase(BaseModel):
     username: str = Field(max_length=30, min_length=1)
     password: str = Field(max_length=255)
     description: str | None = Field(default=None, max_length=255)
-    # reg_date: datetime = Field(default_factory=datetime.now())
 
 
 class CreateUser(UserBase):
     pass
-
-
-class Message(BaseModel):
-    message: str
 
 
 class UsernameBase(BaseModel):
@@ -51,7 +46,6 @@ class EmailSchema(BaseModel):
 # auth mail --------------------------------------------------------
 class AuthMailResponse(BaseModel):
     auth_id: int
-    auth_code: str
 
 
 class AuthMailConfirm(BaseModel):
@@ -59,18 +53,6 @@ class AuthMailConfirm(BaseModel):
     auth_code: str
 
 
-# response model -------------------------------------------------
-class ResponseBase(BaseModel):
-    result: str
-    code: int
+# response model --------------------------------------------------------
+class Message(BaseModel):
     message: str
-
-
-class FailResponse(ResponseBase):
-    result: str = Field(default="N")
-
-
-class SuccessResponse(ResponseBase):
-    result: str = "Y"
-    code: int = 0
-    message: str = ""

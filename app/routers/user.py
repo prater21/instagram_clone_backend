@@ -1,45 +1,39 @@
-from fastapi import APIRouter, Depends, status, HTTPException, Body, Request
+from fastapi import APIRouter, status, HTTPException, Request
 
 from app.utils.authUtils import hash_pw
-from app.schemas import CreateUser, Message
+from app.schemas import Message, ResetPasswordBase
 from app.models import User
 from app.database import db_dependency
+from app.utils.logger import log_request
+from app.utils.common import raise_error
 
-router = APIRouter()
+router = APIRouter(prefix="/user", tags=["user"])
 
-
-# 회원가입
-@router.post("/signup")
-async def register(db: db_dependency, request: Request, user_info: CreateUser):
-    url = request.url.path
-    try:
-        user = (
-            db.query(User)
-            .filter(
-                (User.email == user_info.email) | (User.username == user_info.username)
-            )
-            .first()
-        )
-        if user:
-            return getError(url, 1009)
-            # raise HTTPException(
-            #     status_code=status.HTTP_409_CONFLICT, detail="invalid user info"
-            # )
-
-        user_info.password = hash_pw(user_info.password)
-
-        new_user = User(**user_info.model_dump())
-        db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
-
-    except Exception as e:
-        return getError(url, 5000, e)
-
-    ret_info = {"result": "Y", "code": 0, "message": ""}
-    return ret_info
+# api list
+# password reset
+# login
+# username check
+# email check, send authcode, confirm autocode
 
 
-# @router.post("/logout")
-# async def logout():
-#     return {}
+@router.post("/password/reset", status_code=status.HTTP_200_OK, response_model=Message)
+async def reset_password(
+    db: db_dependency,
+    request: Request,
+    user_info: ResetPasswordBase,
+):
+    """
+    reset password
+    """
+    log_request(request.url.path, request.method, body=user_info)
+    user = db.query(User).filter(User.email == user_info.email).first()
+
+    if user is None:
+        raise_error(request.url.path, request.method, 406, "Invalid user info")
+
+    user.password = hash_pw(user_info.password)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return Message(message="Password reset was successful")

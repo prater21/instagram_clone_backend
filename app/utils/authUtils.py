@@ -1,9 +1,5 @@
 from passlib.context import CryptContext
-from fastapi import FastAPI
-from starlette.responses import JSONResponse
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from pydantic import EmailStr, BaseModel, FilePath
-from typing import Annotated, List
 import random
 import math
 from pathlib import Path

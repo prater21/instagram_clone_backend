@@ -1,5 +1,7 @@
 from fastapi import FastAPI
+from starlette.middleware.base import BaseHTTPMiddleware
 
+from app.middleware import log_middleware
 from . import models
 from .database import engine
 from .routers import auth, user
@@ -12,6 +14,8 @@ origins = [
     "http://localhost:3000",
 ]
 
+
+app.add_middleware(BaseHTTPMiddleware, dispatch=log_middleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -20,10 +24,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 app.include_router(auth.router)
 app.include_router(user.router)
 
 
-@app.get("/")
+@app.get("/hello")
 async def hello():
+
     return {"message": "hello"}
