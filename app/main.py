@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.middleware import log_middleware
+from app.routers import auth, user, post
 from . import models
-from .database import engine
-from .routers import auth, user
+from app.database import engine
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(openapi_url="")
 
 models.Base.metadata.create_all(bind=engine)
 origins = [
@@ -27,6 +27,7 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(user.router)
+app.include_router(post.router)
 
 
 @app.get("/hello")

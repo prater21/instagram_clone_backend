@@ -56,3 +56,8 @@ class AuthMailConfirm(BaseModel):
 # response model --------------------------------------------------------
 class Message(BaseModel):
     message: str
+
+
+# post model --------------------------------------------------------
+class ImageResponse(BaseModel):
+    img_src: str

@@ -31,3 +31,4 @@ class AppConfig(BaseSettings):
     AWS_S3_ACCESS_KEY: str
     AWS_S3_PRIVATE_KEY: str
     AWS_S3_BUCKET_NAME: str
+    AWS_S3_REGION: str
