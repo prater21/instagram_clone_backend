@@ -1,5 +1,5 @@
 # instagram_clone
-Instagram clone project using FastAPI
+Instagram clone project using FastAPI, SQLAlchemy, MySQL
 
 <!-- [__>>LIVE DEMO__](https://yelp-campground-ic3l.onrender.com/)  -->
 <!-- ###### takes some time to wake up the server -->
@@ -15,14 +15,20 @@ Instagram clone project using FastAPI
 - Authentication
   - Login with username and password
   - JWT token
+- User
+  - Reset Password
 
-<!-- -- Post
+[Upcoming Features]
+- Post
   - Create, Read, Update, Delete
+  - Like post, Leave Comment 
+- User
+  - Follow user
+  - Update description
 - AWS S3 Image upload
+- etc...
   
-  - Authorization
-  - Only authenticated user can update and delete Posts
-  - Only authenticated user can delete Comments -->
+
 
 
 
