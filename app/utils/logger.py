@@ -1,6 +1,5 @@
 import logging
 import sys
-from time import time
 
 # loggin setting
 logger = logging.getLogger("main")
@@ -15,7 +14,6 @@ file_handler = logging.FileHandler("app.log")
 # set log-level
 logger.setLevel(logging.INFO)
 file_handler.setLevel(logging.ERROR)
-
 
 # set formatters
 steam_handler.setFormatter(formatter)

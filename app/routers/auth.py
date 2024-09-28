@@ -80,7 +80,7 @@ async def login(
 
     access_token = create_access_token(data={"user_id": user.id})
 
-    return TokenBase(access_token)
+    return TokenBase(access_token=access_token)
 
 
 @router.post("/username/check", status_code=status.HTTP_200_OK, response_model=Message)
@@ -172,7 +172,7 @@ async def email_authcode_send(
 
     background_tasks.add_task(send_mail, email=email.email, auth_code=auth_code)
 
-    return AuthMailResponse(auth_id)
+    return AuthMailResponse(auth_id=auth_id)
 
 
 @router.post(

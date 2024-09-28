@@ -31,7 +31,7 @@ def set_mail_config():
         MAIL_SSL_TLS=False,
         USE_CREDENTIALS=True,
         VALIDATE_CERTS=True,
-        TEMPLATE_FOLDER=Path(__file__).parent / "./templates",
+        TEMPLATE_FOLDER=Path(__file__).parent / "../templates",
     )
     return conf
 

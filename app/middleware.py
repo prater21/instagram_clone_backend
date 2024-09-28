@@ -7,8 +7,8 @@ async def log_middleware(request: Request, call_next):
 
     response = await call_next(request)
 
-    if response.status_code>=400 :
-        return response
+    # if response.status_code>=400 :
+        # return response
 
     response_body = b""
     async for chunk in response.body_iterator:

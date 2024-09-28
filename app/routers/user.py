@@ -11,9 +11,16 @@ router = APIRouter(prefix="/user", tags=["user"])
 
 # api list
 # password reset
-# login
-# username check
-# email check, send authcode, confirm autocode
+# update description
+# update profile img
+
+
+# 프로필 조회(팔로우 수, 팔로잉 수, 게시물 조회, 소개글, 이미지)
+# 팔로우 조회, 팔로잉 조회
+# 팔로우(등록, 취소)
+
+# 프로필 사진 수정
+# 유저네임 수정
 
 
 @router.post("/password/reset", status_code=status.HTTP_200_OK, response_model=Message)
