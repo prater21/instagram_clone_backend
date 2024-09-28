@@ -14,8 +14,13 @@ Instagram clone project using FastAPI
 
 - Authentication
   - Login with username and password
+  - JWT token
+
+<!-- -- Post
+  - Create, Read, Update, Delete
+- AWS S3 Image upload
   
-<!-- - Authorization
+  - Authorization
   - Only authenticated user can update and delete Posts
   - Only authenticated user can delete Comments -->
 
