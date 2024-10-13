@@ -29,15 +29,3 @@ async def upload_to_s3(file, directory="post"):
 
     except Exception as e:
         return e
-
-    # try:
-    #     s3.upload_fileobj(file.file, config.AWS_S3_BUCKET_NAME, s3_key)
-    # except (BotoCoreError, ClientError) as e:
-    #     print(e)
-    # raise HTTPException(status_code=500, detail=f"S3 upload fails: {str(e)}")
-
-    # url = "https://s3-ap-northeast-2.amazonaws.com/%s/%s" % (
-    #     BUCKET_NAME,
-    #     urllib.parse.quote(s3_key, safe="~()*!.'"),
-    # )
-    # return JSONResponse(content={"url": url})

@@ -16,6 +16,7 @@ from app.utils.authUtils import get_auth_number, send_mail, verify_pw, hash_pw
 from app.schemas import (
     AuthMailConfirm,
     AuthMailResponse,
+    LoginResponse,
     Message,
     TokenBase,
     UsernameBase,
@@ -26,7 +27,7 @@ from app.schemas import (
 from app.utils.logger import log_error, log_request
 
 
-router = APIRouter(tags=["Authentication"])
+router = APIRouter()
 
 
 # api list
@@ -41,7 +42,7 @@ async def sign_up(db: db_dependency, request: Request, user_info: CreateUser):
     """
     Sign Up
     """
-    log_request(request.url.path, request.method, body=user_info)
+    log_request(request.url.path, request.method, user_info)
 
     user = (
         db.query(User)
@@ -61,7 +62,7 @@ async def sign_up(db: db_dependency, request: Request, user_info: CreateUser):
     return Message(message="Signed up successfully")
 
 
-@router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenBase)
+@router.post("/login", status_code=status.HTTP_200_OK, response_model=LoginResponse)
 async def login(
     db: db_dependency,
     request: Request,
@@ -70,7 +71,7 @@ async def login(
     """
     Login
     """
-    log_request(request.url.path, request.method, body=user_info)
+    log_request(request.url.path, request.method, user_info)
     user = db.query(User).filter(User.email == user_info.username).first()
     if user is None:
         raise_error(request.url.path, request.method, 403, "Invalid Credentials")
@@ -80,7 +81,9 @@ async def login(
 
     access_token = create_access_token(data={"user_id": user.id})
 
-    return TokenBase(access_token=access_token)
+    return LoginResponse(
+        access_token=access_token, username=user.username, user_id=user.id
+    )
 
 
 @router.post("/username/check", status_code=status.HTTP_200_OK, response_model=Message)
@@ -88,7 +91,7 @@ async def username_check(db: db_dependency, request: Request, username: Username
     """
     check username validation
     """
-    log_request(request.url.path, request.method, body=username)
+    log_request(request.url.path, request.method, username)
 
     duplicate = db.query(User).filter(User.username == username.username).first()
 
@@ -104,7 +107,7 @@ async def email_check(db: db_dependency, request: Request, email: EmailBase):
     check email validation
     """
 
-    log_request(request.url.path, request.method, body=email)
+    log_request(request.url.path, request.method, email)
     duplicate = db.query(User).filter(User.email == email.email).first()
 
     if duplicate:
@@ -127,7 +130,7 @@ async def email_authcode_send(
     """
     send email verification code
     """
-    log_request(request.url.path, request.method, body=email)
+    log_request(request.url.path, request.method, email)
 
     auth_code = get_auth_number()
     expire_date = get_cur_datetime() + datetime.timedelta(minutes=5)
@@ -186,7 +189,7 @@ async def email_authcode_confirm(
     """
     confirm email verification code
     """
-    log_request(request.url.path, request.method, body=auth_info)
+    log_request(request.url.path, request.method, auth_info)
 
     cur_datetime = get_cur_datetime()
     auth_confirm = (

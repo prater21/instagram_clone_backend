@@ -1,5 +1,6 @@
 import logging
 import sys
+from typing import Optional
 
 # loggin setting
 logger = logging.getLogger("main")
@@ -24,14 +25,21 @@ file_handler.setFormatter(formatter)
 logger.handlers = [steam_handler, file_handler]
 
 
-def log_request(url, method, path={}, query={}, body={}):
+def log_request(url, method, parmas):
     log_dict = f"{method} - {url} - [REQUEST]"
-    if path:
-        log_dict += f"\n(path){path}"
-    if query:
-        log_dict += f"\n(query){query}"
-    if body:
-        log_dict += f"\n(body){body}"
+
+    if parmas:
+        log_dict += f"\n{parmas}"
+
+    logger.info(log_dict)
+
+
+def log_request_auth(url, method, user_info, parmas):
+    log_dict = f"{method} - {url} - [REQUEST]"
+
+    log_dict += f"\nuser_info:{user_info},"
+    if parmas:
+        log_dict += f"{parmas}"
 
     logger.info(log_dict)
 

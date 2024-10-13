@@ -26,7 +26,7 @@ class User(Base):
         String(255),
         nullable=False,
     )
-    # profile_url = Column(String(255))
+    profile_img = Column(String(255))
     description = Column(String(150))
     reg_date = Column(DateTime, default=datetime.datetime.now())
 

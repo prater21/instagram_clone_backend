@@ -7,7 +7,7 @@ from . import models
 from app.database import engine
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(openapi_url="")
+app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
 origins = [
@@ -25,9 +25,9 @@ app.add_middleware(
 )
 
 
-app.include_router(auth.router)
-app.include_router(user.router)
-app.include_router(post.router)
+app.include_router(auth.router, tags=["auth"])
+app.include_router(user.router, prefix="/user", tags=["user"])
+app.include_router(post.router, prefix="/post", tags=["post"])
 
 
 @app.get("/hello")

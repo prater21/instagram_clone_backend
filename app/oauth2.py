@@ -38,14 +38,15 @@ def verify_access_token(token: str, credentials_exception):
 
         token_data = TokenData(id=id)
 
-    except JWSError:
+    # except JWSError:
+    #     raise credentials_exception
+
+    # except jwt.ExpiredSignatureError:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_403_FORBIDDEN, detail="expired token"
+    # )
+    except Exception:
         raise credentials_exception
-
-    except jwt.ExpiredSignatureError:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="expired token"
-        )
-
     return token_data
 
 
